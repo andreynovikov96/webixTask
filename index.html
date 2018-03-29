@@ -47,10 +47,11 @@
                 data:["Dashboad", "Users", "Products", "Locations"]
                 
             },
-            {view: "label", 
-            css:"labelgreen",
-            label:"<span class='webix_icon fa-check'></span>Connected",
-            align:"center"
+            {
+                view: "label", 
+                css: "labelgreen",
+                label:"<span class='webix_icon fa-check'></span>Connected",
+                align:"center"
             }
         ]
     };
@@ -79,6 +80,7 @@
                                 var item = $$("myform").getValues();
                                 $$("mytable").add(item);
                                 webix.alert("Data checked and added to the table");
+                                
                             }
                         }},
                         { view: "button", value: "Clear", click: function () {
@@ -124,6 +126,8 @@
             footer
         ]
     });
+
+    
     </script>
 </body>
 </html>
