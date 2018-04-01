@@ -5,129 +5,29 @@
     <title>Lesson 1</title>
     <meta name="vieport" content="width=device-width, inital-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="testdata.js"></script>
 <!--    Webix-->
     <script type="text/javascript" src="http://cdn.webix.com/edge/webix_debug.js"></script>
     <link rel="stylesheet" type="text/css" href="http://cdn.webix.com/edge/webix.css">
 </head>
 <body>
-    <script type="text/javascript" charset="utf-8">
-    
-    var banner = {
-        view: 'toolbar',
-        elements: [
-            {view: 'label', label: 'My App'},
-            {},
-            {view: 'button', type: 'icon', icon: 'user', label: 'Profile', width: 120, popup:"mypop"}
-        ]
-    };
+<script src="scripts/header.js"></script> 
+<script src="scripts/main.js"></script> 
+<script src="scripts/footer.js"></script> 
 
-    var pop = webix.ui ({
-        view: "popup",
-        id: "mypop",
-        body: {
-            view: "list",
-            data: [
-                {id:"1", name:"Settings"},
-                {id:"2", name:"Log out"}
-            ],
-            template:"#name#",
-            autoheight:true,
-            select:true
-        }
-    });
-
-    var list = {
-        css: "listColor",
-        rows: [
-            { 
-                view:"list",
-                id:"mylist",
-                scroll:false,
-                data:["Dashboad", "Users", "Products", "Locations"]
-                
-            },
-            {
-                view: "label", 
-                css: "labelgreen",
-                label:"<span class='webix_icon fa-check'></span>Connected",
-                align:"center"
-            }
-        ]
-    };
-
-    var table = {    
-        view: "datatable", 
-        id: "mytable",
-        gravity: 2,
-        autoConfig: true,
-        scrollX: false,
-        data: small_film_set
-    };
-
-    var form = {
-                view:"form",
-                id: "myform",
-                elements:[
-                    { template:"Edit Films", type:"section"},
-                    { view:"text", label:"Title", name:"title", invalidMessage: "Empty line"},
-                    { view:"text", label:"Year", name:"year", invalidMessage: "Enter year between 1970 and 2018"},
-                    { view:"text", label:"Rating", name:"rating", invalidMessage: "Value can not be empty or 0"},
-                    { view:"text", label:"Votes", name:"votes", invalidMessage: "The value must be less than 100000"},
-                    { cols: [ 
-                        { view: "button", value: "Add new", type:"form", click: function () {
-                            if ($$("myform").validate ()) {
-                                var item = $$("myform").getValues();
-                                $$("mytable").add(item);
-                                webix.alert("Data checked and added to the table");
-                                
-                            }
-                        }},
-                        { view: "button", value: "Clear", click: function () {
-                            webix.confirm ({
-                                text: "The form will be cleared. Continue?",
-                                callback:function (result) {
-                                    if (result) {
-                                        $$("myform").clear();
-                                        $$("myform").clearValidation();
-                                    }
-                                }
-                            });
-                        }} 
-                    ]},
-                    {}
-                ],
-                rules:{
-                    title: webix.rules.isNotEmpty,
-                    year: function (value) {
-                        return value >= 1970 && value <= 2018;
-                    },
-                    rating: function (value) {
-                        return value > 0;
-                    },
-                    votes: function (value) {
-                        return value > 0 && value < 10000;
-                    }
-                }
-    };
-
-    var footer = {template: "<center>The software is provided by <a href='https://webix.com'>https://webix.com.</a>All rights reserved (c).</center>",height: 40 };
-    
+<script type="text/javascript" charset="utf-8">
     webix.ui ({
         rows:[
             banner,
             {cols: [
                 list, 
                 {view:"resizer"},
-                table, 
-                form
+                main
                 ]
             },
             footer
         ]
     });
-
-    
+    $$("mylist").select("Dashboad");
     </script>
 </body>
 </html>

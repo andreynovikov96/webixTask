@@ -5,3 +5,11 @@
 .labelgreen  div{
     color: green;
 }
+.myhover {
+    background-color: red;
+}
+
+.delete {
+    float: right;
+    padding-top: 6px;
+}
