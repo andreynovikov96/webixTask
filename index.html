@@ -12,9 +12,13 @@
 <body>
 <script src="scripts/header.js"></script> 
 <script src="scripts/main.js"></script> 
-<script src="scripts/footer.js"></script> 
+<script src="scripts/footer.js"></script>
 
 <script type="text/javascript" charset="utf-8">
+    webix.protoUI({
+        name:"editlist"
+    }, webix.EditAbility, webix.ui.list);
+
     webix.ui ({
         rows:[
             banner,
@@ -27,7 +31,43 @@
             footer
         ]
     });
+    $$("myform").bind($$("mytable"));
     $$("mylist").select("Dashboad");
+    $$("mychart").sync($$("mylistSorting"), function () {
+        this.group({
+            by: "country",
+            map: {
+                age: ["age", "count"]
+            }
+        });
+        //this.sort("#age#", "asc");
+    });
+
+    $$("mytable").registerFilter (
+        $$("tabbarFilter"),
+        {
+            columnId:"year", compare:function(value, filter, item){
+                if(filter == "oldView") {
+                    return value < 2000;
+                }
+                else if(filter == "modernView"){
+                    return value >= 2000 && value <2010;
+                    }
+                    else if (filter == "newView"){
+                        return value > 2010;
+                        }
+                        else return value;
+                    }
+                },
+                {
+                    getValue: function (node) {
+                        return node.getValue();
+                    },
+                    setValue: function (node, value) {
+                        node.setValue (value);
+                    }
+        }
+    );
     </script>
 </body>
 </html>

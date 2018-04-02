@@ -5,11 +5,15 @@
 .labelgreen  div{
     color: green;
 }
-.myhover {
-    background-color: red;
+.myhover.webix_cell {
+    background: orange;
 }
 
 .delete {
     float: right;
-    padding-top: 6px;
+    padding-top: 5px;
+}
+
+.listYellow.webix_list_item {
+    background-color: yellow;
 }
