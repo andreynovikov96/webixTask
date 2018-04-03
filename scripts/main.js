@@ -9,7 +9,7 @@ var list = {
             borderless:true,
             select:true,
             scroll:false,
-            data:["Dashboad", "Users", "Products", "Locations"],
+            data:["Dashboad", "Users", "Products", "Admin"],
             on: {
                 onAfterSelect: function (id) {
                     $$(id).show();
@@ -24,12 +24,6 @@ var list = {
         }
     ]
 };
-var categoryFilms = [
-	{ "id":1, "value":"Drama" },
-	{ "id":2, "value":"Fiction" },
-	{ "id":3, "value":"Comedy" },
-	{ "id":4, "value":"Horror" }
-];
 
 var table = {
     gravity:2,
@@ -54,26 +48,20 @@ var table = {
             id: "mytable",
             hover:"myhover",
             select:true,
-            autoConfig: true,
             scrollX: false,
-            url: "data/data.js",
+            data: films,
+            
             columns:[
-                {id:"rank", header:"Num", css:"webix_ss_header", width:50,sort:"int"},
+                {id:"rank", header:"Num", css:"webix_ss_header", width:50, sort:"int"},
                 {id:"title", header:["Title", {content:"textFilter"}], fillspace:true, sort:"string"},
                 {id:"year", header:"Year", sort:"int"},
                 {id:"votes", header:["Votes", {content:"numberFilter"}], sort:"int"},
                 {id:"rating", header:["Rating", {content:"numberFilter"}], sort:"int"},
-                {id:"category", header:["Category", {content:"selectFilter"}], editor:"select", collection:"data/categories.js"},
+                {id:"category", header:["Category", {content:"selectFilter"}], collection: categories},
                 {template:"{common.trashIcon()}", width:30}
             ],
-            scheme: {
-                $init: function(item) {
-                    //item.category = Math.ceil(Math.random()*(categoryFilms.length));
-                }
-            },
             onClick:{
-                "fa-trash":function(){
-                    var id = $$("mytable").getSelectedId();
+                "fa-trash":function(ev, id){
                     $$("mytable").remove(id);
                 }
             }
@@ -90,6 +78,7 @@ var form = {
         {view:"text", label:"Year", name:"year", invalidMessage: "Enter year between 1970 and 2018"},
         {view:"text", label:"Rating", name:"rating", invalidMessage: "Value can not be empty or 0"},
         {view:"text", label:"Votes", name:"votes", invalidMessage: "The value must be less than 100000"},
+        {view:"combo", label:"Category", name:"category", options:{data:categories}},
         {cols: [ 
             {view: "button", value: "Save", type:"form", click: function () {
                 var form = $$('myform');
@@ -174,9 +163,7 @@ var listDiagramma = {
                     {"name":"Paolo Sanders", "age":40, "country":"Spain"},
                     {"name":"Tanya Krieg", "age":28, "country":"Germany"}
                 ];
-
                 $$("mylistSorting").add(arr[Math.ceil(Math.random()*(arr.length))]);
-
             }
         },
         ]
@@ -191,15 +178,8 @@ var listDiagramma = {
             rules: {
                 "name": webix.rules.isNotEmpty
             },
-            scheme: {
-                $init: function (obj) {
-                    debugger
-                    if(obj.age < 26) 
-                        obj.$css = "listYellow";
-                }
-            },
             template: "#id#.  <b>#name#</b> #age# #country# <span class='webix_icon fa-times delete'></span>",
-            url:"data/users.js",
+            data: users,
             onClick: {
                 "fa-times":function(ev, id) {
                     this.remove(id);
@@ -241,11 +221,47 @@ var treetable = {
     url: "data/products.js"
 }; 
 
+var adminConfig = {
+    id:"Admin",
+    rows: [
+        {
+            view:"toolbar", 
+            elements:[
+                {view:"button", value:"Add Row", click:function(){
+                    categories.add({
+                        value:"New value"
+                    });
+                }
+            },
+            {view:"button", value:"Delete Row", click:function(){
+                var id = $$("adminTabl").getSelectedId();
+                if (id)
+                    categories.remove(id);
+                }
+            }
+          ]},
+        {
+            view: "datatable",
+            id: "adminTabl",
+            select:true,
+            editable:true,
+            editor:"text",
+            editValue:"value",
+            editaction:"dblclick",
+            columns: [
+                {id:"value", header:["Category", {content:"selectFilter"}]}
+            ],
+            save: "https://docs.webix.com/samples/40_serverside/03_php_custom/server/datatable_rest.php"
+        }
+    ]
+}
+
+
 var main = {
     cells: [
         {id:"Dashboad", cols:[table,form]},
         listDiagramma,
         treetable,
-        {id:"Locations", template:"Locations View"}
+        adminConfig
     ]
 };

@@ -10,14 +10,19 @@
     <link rel="stylesheet" type="text/css" href="http://cdn.webix.com/edge/webix.css">
 </head>
 <body>
-<script src="scripts/header.js"></script> 
-<script src="scripts/main.js"></script> 
-<script src="scripts/footer.js"></script>
+    <script src="./collections/categories.js"></script>
+    <script src="./collections/films.js"></script>
+    <script src="./collections/countries.js"></script> 
+    <script src="./collections/users.js"></script>
+    <script src="scripts/header.js"></script> 
+    <script src="scripts/main.js"></script> 
+    <script src="scripts/footer.js"></script>
 
 <script type="text/javascript" charset="utf-8">
+    
     webix.protoUI({
         name:"editlist"
-    }, webix.EditAbility, webix.ui.list);
+    }, webix.EditAbility, webix.ui.list); 
 
     webix.ui ({
         rows:[
@@ -31,8 +36,13 @@
             footer
         ]
     });
+
     $$("myform").bind($$("mytable"));
     $$("mylist").select("Dashboad");
+    
+    $$("adminTabl").sync(categories);
+    //$$("myform").sync(categories);
+    
     $$("mychart").sync($$("mylistSorting"), function () {
         this.group({
             by: "country",
@@ -69,5 +79,6 @@
         }
     );
     </script>
+    
 </body>
 </html>
